@@ -70,18 +70,81 @@ exports.pushRecurringsChangesToDonorEvents = functions.database.ref('/recurrings
       const afterAmount = after.amount;
       const afterFrequency = after.frequency;
 
-      return admin.database().ref(`/histories`).push(
-        {
-          type: "recurring",
-          status: "update",
-          timestamp: Date.now(),
-          donor: `${before.donor}`,
-          beforeAmount: `${beforeAmount}`,
-          afterAmount: `${afterAmount}`,
-          beforeFrequency: `${beforeFrequency}`,
-          afterFrequency: `${afterFrequency}`,
-        }
-      )
+
+      if ( beforeAmount === afterAmount ) {
+        return admin.database().ref(`/histories`).push(
+          {
+            type: "recurring",
+            status: "updatedFrequency",
+            timestamp: Date.now(),
+            donor: `${before.donor}`,
+            beforeAmount: `${beforeAmount}`,
+            afterAmount: `${afterAmount}`,
+            beforeFrequency: `${beforeFrequency}`,
+            afterFrequency: `${afterFrequency}`,
+          }
+        )
+      }
+
+      if (beforeAmount > afterAmount && beforeFrequency === afterFrequency) {
+        return admin.database().ref(`/histories`).push(
+          {
+            type: "recurring",
+            status: "updateIncreaseAmountNotFrequency",
+            timestamp: Date.now(),
+            donor: `${before.donor}`,
+            beforeAmount: `${beforeAmount}`,
+            afterAmount: `${afterAmount}`,
+            beforeFrequency: `${beforeFrequency}`,
+            afterFrequency: `${afterFrequency}`,
+          }
+        )
+      }
+
+      if (beforeAmount > afterAmount && beforeFrequency !== afterFrequency) {
+        return admin.database().ref(`/histories`).push(
+          {
+            type: "recurring",
+            status: "updateIncreaseAmountAndFrequency",
+            timestamp: Date.now(),
+            donor: `${before.donor}`,
+            beforeAmount: `${beforeAmount}`,
+            afterAmount: `${afterAmount}`,
+            beforeFrequency: `${beforeFrequency}`,
+            afterFrequency: `${afterFrequency}`,
+          }
+        )
+      }
+
+      if (beforeAmount < afterAmount && beforeFrequency === afterFrequency) {
+        return admin.database().ref(`/histories`).push(
+          {
+            type: "recurring",
+            status: "updateDecreaseAmountNotFrequency",
+            timestamp: Date.now(),
+            donor: `${before.donor}`,
+            beforeAmount: `${beforeAmount}`,
+            afterAmount: `${afterAmount}`,
+            beforeFrequency: `${beforeFrequency}`,
+            afterFrequency: `${afterFrequency}`,
+          }
+        )
+      }
+
+      if (beforeAmount < afterAmount && beforeFrequency !== afterFrequency) {
+        return admin.database().ref(`/histories`).push(
+          {
+            type: "recurring",
+            status: "updateDecreaseAmountAndFrequency",
+            timestamp: Date.now(),
+            donor: `${before.donor}`,
+            beforeAmount: `${beforeAmount}`,
+            afterAmount: `${afterAmount}`,
+            beforeFrequency: `${beforeFrequency}`,
+            afterFrequency: `${afterFrequency}`,
+          }
+        )
+      }
 });
 
 
