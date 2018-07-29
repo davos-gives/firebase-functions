@@ -86,7 +86,7 @@ exports.pushRecurringsChangesToDonorEvents = functions.database.ref('/recurrings
         )
       }
 
-      if (beforeAmount > afterAmount && beforeFrequency === afterFrequency) {
+      if (beforeAmount < afterAmount && beforeFrequency === afterFrequency) {
         return admin.database().ref(`/histories`).push(
           {
             type: "recurring",
@@ -101,7 +101,7 @@ exports.pushRecurringsChangesToDonorEvents = functions.database.ref('/recurrings
         )
       }
 
-      if (beforeAmount > afterAmount && beforeFrequency !== afterFrequency) {
+      if (beforeAmount < afterAmount && beforeFrequency !== afterFrequency) {
         return admin.database().ref(`/histories`).push(
           {
             type: "recurring",
@@ -116,7 +116,7 @@ exports.pushRecurringsChangesToDonorEvents = functions.database.ref('/recurrings
         )
       }
 
-      if (beforeAmount < afterAmount && beforeFrequency === afterFrequency) {
+      if (beforeAmount > afterAmount && beforeFrequency === afterFrequency) {
         return admin.database().ref(`/histories`).push(
           {
             type: "recurring",
@@ -131,7 +131,7 @@ exports.pushRecurringsChangesToDonorEvents = functions.database.ref('/recurrings
         )
       }
 
-      if (beforeAmount < afterAmount && beforeFrequency !== afterFrequency) {
+      if (beforeAmount > afterAmount && beforeFrequency !== afterFrequency) {
         return admin.database().ref(`/histories`).push(
           {
             type: "recurring",
