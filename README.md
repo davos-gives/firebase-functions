@@ -15,6 +15,7 @@ This repository is the temporary home to some functions we're running in Firebas
 1. Install [Firebase tools](https://github.com/firebase/firebase-tools) using yarn or NPM.
 2. Clone the project from the repository on Github.
 3. `cd` into project and run `yarn add` to bring in required packages.
+4. Modify current functions or add new functions to `index.js` file.
 
 ## Folder Structure
 
